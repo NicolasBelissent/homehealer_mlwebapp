@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import joblib
 from pyforest import *
 import numpy as np
-from main import manipulateFeatureNames
+from model import manipulateFeatureNames
 import requests
 
 #naming our app
