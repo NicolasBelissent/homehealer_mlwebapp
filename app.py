@@ -16,7 +16,6 @@ model= joblib.load(open("trained_dt_model.pkl", "rb"))
 def home():
     return render_template("index.html")
 
-
 def oneHotConversion(values):
     # load in the csv file from 
     feature_framework = np.loadtxt("one_hot_framework.csv", dtype=str, usecols=0)
