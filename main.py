@@ -51,7 +51,7 @@ np.savetxt(r"one_hot_framework.csv", manipulateFeatureNames(list(one_hot_df.colu
 
 
 # Split the dataset
-X_train, X_test, y_train, y_test = train_test_split(one_hot_df, labels_df, test_size=0.33, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(one_hot_df.to_numpy(), labels_df.to_numpy(), test_size=0.33, random_state=42)
 
 # Train regression model
 clf = tree.DecisionTreeRegressor()
