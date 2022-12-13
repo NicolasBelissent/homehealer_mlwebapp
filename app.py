@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 import joblib
 import numpy as np
 from model import manipulateFeatureNames
@@ -14,6 +14,7 @@ model= joblib.load(open("trained_dt_model.pkl", "rb"))
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 def oneHotConversion(values):
     # load in the csv file from 
@@ -45,6 +46,7 @@ def predict():
     # create a list of inputed features
     inputed_features = [rating,postcode,housetype]
 
+
     # Check if values entered for every input feature
     if None in inputed_features or '' in inputed_features:
 
@@ -58,6 +60,10 @@ def predict():
         # Obtain local Authority through directory search
         local = str(response['data']['attributes']['laua_name'])
 
+        # Obtain logitude and latitude of the postcode
+        lon = str(response['data']['attributes']['location']['lon'])
+        lat = str(response['data']['attributes']['location']['lat'])
+
         # create a list of categorical features
         string_features = [rating,local,housetype]
 
@@ -69,7 +75,10 @@ def predict():
 
         # return these predictions to the user
         output= round(prediction[0], 2)
-        return render_template("index.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output))
+
+       
+        
+        return render_template("index.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output), lat = lat, lon = lon)
 
 if __name__== "__main__":
     app.run(debug=True)
