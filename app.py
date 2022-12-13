@@ -72,4 +72,4 @@ def predict():
         return render_template("index.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output))
 
 if __name__== "__main__":
-    app.run(debug=True)
+    HomeHealer.run(debug=True)
