@@ -5,6 +5,14 @@ import numpy as np
 from model import manipulateFeatureNames
 import requests
 
+def manipulateFeatureNames(names):
+    ''''
+    This function manipulates user inputs to map to the features in the framework.
+    '''
+    new_names = [ n.translate(str.maketrans('', '', string.punctuation)).replace(" ", "").lower() for n in names]
+    return new_names
+
+
 #naming our app
 HomeHealer= Flask(__name__)
 
