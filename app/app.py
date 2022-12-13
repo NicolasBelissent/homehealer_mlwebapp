@@ -5,13 +5,13 @@ from model import manipulateFeatureNames
 import requests
 
 #naming our app
-HomeHealer= Flask(__name__)
+app= Flask(__name__)
 
 #loading the pickle file for creating the web app
 model= joblib.load(open("trained_dt_model.pkl", "rb"))
 
 # defining the different pages of html and specifying the features required to be filled in the html form
-@HomeHealer.route("/")
+@app.route("/")
 def home():
     return render_template("index.html")
 
@@ -30,7 +30,7 @@ def oneHotConversion(values):
 
 
 # defining a prediction function
-@HomeHealer.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST"])
 def predict():
     '''
     This function acts is the core flask function that interacts with the front end. Values
@@ -72,4 +72,4 @@ def predict():
         return render_template("index.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output))
 
 if __name__== "__main__":
-    HomeHealer.run(debug=True)
+    app.run(debug=True)
