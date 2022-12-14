@@ -6,15 +6,91 @@ from model import manipulateFeatureNames
 import requests
 
 #naming our app
-HomeHealer= Flask(__name__)
+app= Flask(__name__)
 
 #loading the pickle file for creating the web app
 model= joblib.load(open("trained_dt_model.pkl", "rb"))
 
 # defining the different pages of html and specifying the features required to be filled in the html form
-@HomeHealer.route("/")
+@app.route("/")
 def home():
-    return render_template("index.html")
+    # if request.method == "POST":
+    #     home_type=request.form.get("house-type")
+    #     energy_rating = request.form.get("energy")
+    #     postcode = request.form.get("postcode")
+    #     return "your house is " + home_type + " with energy rating " + energy_rating+ " in " + postcode
+    return render_template("start.html")
+
+@app.route("/check", methods = ['GET', 'POST'])
+
+def check():
+    energy= request.form.get('energy')
+    housetype= request.form.get('house-type')
+    postcode = request.form.get('postcode')
+    
+    inputed_features = [energy,postcode,housetype]
+
+    if None in inputed_features or '' in inputed_features:
+
+        # Return erro prompt if not complete
+        return render_template("test.html", prediction_text= 'Please select a value for all inputs.')
+    else:
+
+        # Making a get request to get Local Authority from inputed postcode
+        response = requests.get('https://findthatpostcode.uk/postcodes/{}.json'.format(str(postcode))).json()
+ 
+        # Obtain local Authority through directory search
+        local = str(response['data']['attributes']['laua_name'])
+
+        # Obtain logitude and latitude of the postcode
+        lon = str(response['data']['attributes']['location']['lon'])
+        lat = str(response['data']['attributes']['location']['lat'])
+
+    return render_template("check.html", home_type = request.form['house-type'], energy_rating = request.form['energy'], postcode = request.form['postcode'], lon = lon, lat = lat )
+
+@app.route("/results", methods = ['GET', 'POST'])
+def results():
+    # extract inputed features
+    rating= request.form.get('energy')
+    housetype= request.form.get('house-type')
+    postcode = request.form.get('postcode')
+
+    # create a list of inputed features
+    inputed_features = [rating,postcode,housetype]
+
+    # Check if values entered for every input feature
+    if None in inputed_features or '' in inputed_features:
+
+        # Return erro prompt if not complete
+        return render_template("test.html", prediction_text= 'Please select a value for all inputs.')
+    else:
+
+        # Making a get request to get Local Authority from inputed postcode
+        response = requests.get('https://findthatpostcode.uk/postcodes/{}.json'.format(str(postcode))).json()
+ 
+        # Obtain local Authority through directory search
+        local = str(response['data']['attributes']['laua_name'])
+
+         # Obtain logitude and latitude of the postcode
+        lon = str(response['data']['attributes']['location']['lon'])
+        lat = str(response['data']['attributes']['location']['lat'])
+
+        # create a list of categorical features
+        string_features = [rating,local,housetype]
+        # convert categorical features to numerical using a previously saved one-hot encoding framework
+        final_features= [np.array(oneHotConversion(string_features))]
+        
+        # obtain prediction for the inputed features
+        prediction= model.predict(final_features)
+
+        # return these predictions to the user
+        output= round(prediction[0], 2)
+        
+        return render_template("results.html", home_type = request.form['house-type'], 
+        energy_rating = request.form['energy'], postcode = request.form['postcode'],
+        prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output),
+        lon = lon, lat = lat)
+
 
 def oneHotConversion(values):
     # load in the csv file from 
@@ -31,7 +107,7 @@ def oneHotConversion(values):
 
 
 # defining a prediction function
-@HomeHealer.route("/predict", methods=["POST"])
+@app.route("/predict", methods=["POST"])
 def predict():
     '''
     This function acts is the core flask function that interacts with the front end. Values
@@ -39,8 +115,8 @@ def predict():
     communicated.
     '''
     # extract inputed features
-    rating= request.form.get('rating')
-    housetype= request.form.get('housetype')
+    rating= request.form.get('energy')
+    housetype= request.form.get('house-type')
     postcode = request.form.get('postcode')
 
     # create a list of inputed features
@@ -70,7 +146,7 @@ def predict():
 
         # return these predictions to the user
         output= round(prediction[0], 2)
-        return render_template("index.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output))
+        return render_template("confirmation.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output))
 
 if __name__== "__main__":
-    HomeHealer.run(debug=True)
+    app.run(debug=True)

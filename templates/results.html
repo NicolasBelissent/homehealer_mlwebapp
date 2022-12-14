@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>HomeHealer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+</head>
+
+<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Ubuntu';font-size: 22px;
+    background-color: #272936;
+    color:white;}
+
+.content-container{
+  background-color: #ffffff;
+  color:#272936; 
+  margin: 100px auto;
+  font-family: 'Ubuntu';
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
+.footer-container {
+    background-color:#ececec;
+    color:#272936;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: left;
+  font-size: x-small;
+}
+#map{
+    display:block;
+    height:400px;
+    width: 400px;
+}
+
+button {
+  background-color: #006fac;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: 'Ubuntu';
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+    </style> 
+</head> 
+<div class = content-container>
+    <body id = results name = results >
+        <br><br>
+            <center>
+                Your property is  {{ home_type }}  with energy rating  {{ energy_rating }}  in   {{ postcode }} 
+                <br><br>
+                {{ prediction_text }}
+            </center>
+    </body>
+
+    <br> <br>
+    <center>
+    <body>
+        <div id="map">
+            <script>
+            var map = L.map('map').setView([{{lat}}, {{lon}}], 12);
+            L.marker([{{lat}}, {{lon}}]).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'}).addTo(map);
+            </script>
+        </div>
+    </body>
+    <form action="/">
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="submit" id="return">Change details</button>
+            </div>
+          </div>
+        </form>
+</div>
+  <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> 
+</center>
+</body>
+<body> 
+    <div class = "footer-container">
+        <div class = "footer">
+            <div class="footer" style="font-style: italic;"> Developed by the Capgemini AI&A graduates
+            </div>
+        </div>
+    </div>
+</body>
+</html>
