@@ -21,32 +21,11 @@ def home():
     #     return "your house is " + home_type + " with energy rating " + energy_rating+ " in " + postcode
     return render_template("start.html")
 
-@app.route("/check", methods = ['GET', 'POST'])
 
-def check():
-    energy= request.form.get('energy')
-    housetype= request.form.get('house-type')
-    postcode = request.form.get('postcode')
-    
-    inputed_features = [energy,postcode,housetype]
+@app.route('/about', methods = ['GET', "POST"])
+def about(): 
+    return render_template('about.html')
 
-    if None in inputed_features or '' in inputed_features:
-
-        # Return erro prompt if not complete
-        return render_template("test.html", prediction_text= 'Please select a value for all inputs.')
-    else:
-
-        # Making a get request to get Local Authority from inputed postcode
-        response = requests.get('https://findthatpostcode.uk/postcodes/{}.json'.format(str(postcode))).json()
- 
-        # Obtain local Authority through directory search
-        local = str(response['data']['attributes']['laua_name'])
-
-        # Obtain logitude and latitude of the postcode
-        lon = str(response['data']['attributes']['location']['lon'])
-        lat = str(response['data']['attributes']['location']['lat'])
-
-    return render_template("check.html", home_type = request.form['house-type'], energy_rating = request.form['energy'], postcode = request.form['postcode'], lon = lon, lat = lat )
 
 @app.route("/results", methods = ['GET', 'POST'])
 def results():
@@ -105,48 +84,6 @@ def oneHotConversion(values):
     feature_vec[locs] = 1
     return feature_vec
 
-
-# defining a prediction function
-@app.route("/predict", methods=["POST"])
-def predict():
-    '''
-    This function acts is the core flask function that interacts with the front end. Values
-    are received from the user and inputed in the train model. The output is then 
-    communicated.
-    '''
-    # extract inputed features
-    rating= request.form.get('energy')
-    housetype= request.form.get('house-type')
-    postcode = request.form.get('postcode')
-
-    # create a list of inputed features
-    inputed_features = [rating,postcode,housetype]
-
-    # Check if values entered for every input feature
-    if None in inputed_features or '' in inputed_features:
-
-        # Return erro prompt if not complete
-        return render_template("index.html", prediction_text= 'Please select a value for all inputs.')
-    else:
-
-        # Making a get request to get Local Authority from inputed postcode
-        response = requests.get('https://findthatpostcode.uk/postcodes/{}.json'.format(str(postcode))).json()
- 
-        # Obtain local Authority through directory search
-        local = str(response['data']['attributes']['laua_name'])
-
-        # create a list of categorical features
-        string_features = [rating,local,housetype]
-
-        # convert categorical features to numerical using a previously saved one-hot encoding framework
-        final_features= [np.array(oneHotConversion(string_features))]
-        
-        # obtain prediction for the inputed features
-        prediction= model.predict(final_features)
-
-        # return these predictions to the user
-        output= round(prediction[0], 2)
-        return render_template("confirmation.html", prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output))
 
 if __name__== "__main__":
     app.run(debug=True)
