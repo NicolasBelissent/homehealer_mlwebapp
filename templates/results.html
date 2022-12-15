@@ -33,7 +33,7 @@ body {
   font-size: x-small;
 }
 #map{
-    display:block;
+    display:inline-block;
     height:400px;
     width: 400px;
 }
@@ -51,39 +51,84 @@ button {
 button:hover {
   opacity: 0.8;
 }
+
+#table.{
+background-color: #ffffff;
+  color:#272936; 
+  margin: 100px auto;
+  font-family: 'Ubuntu';
+  border-collapse: separate;
+  border-spacing: 100px;
+}
+
+table tr td:empty {
+  width: 100px;
+}
+  
+table tr td {
+  padding-bottom: 10px;
+}
+ 
     </style> 
 </head> 
 <div class = content-container>
-    <body id = results name = results >
-        <br><br>
-            <center>
-                Your property is  {{ home_type }}  with energy rating  {{ energy_rating }}  in   {{ postcode }} 
-                <br><br>
-                {{ prediction_text }}
-            </center>
-    </body>
-
-    <br> <br>
     <center>
-    <body>
-        <div id="map">
-            <script>
-            var map = L.map('map').setView([{{lat}}, {{lon}}], 12);
-            L.marker([{{lat}}, {{lon}}]).addTo(map);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'}).addTo(map);
-            </script>
-        </div>
+    <h1><b>Results:</b></h1>
+    </center>
+    <div class = content-container>
+        <body id = results name = results >
+                <center>
+                    Your property is a/an <b> {{ home_type }} </b> with energy rating <b> {{ energy_rating }} </b> in <b>  {{ postcode }}</b> 
+                    <br><br>
+                 <span style = "color:#006fac;"><b>  {{ prediction_text }} </b> </span>
+                </center>
+        </body>
+
+    
+    <br><br>
     </body>
+    <table id = "table">
+        <tr>
+        <td>
+            <div id="map">
+                <script>
+                var map = L.map('map').setView([{{lat}}, {{lon}}], 12);
+                L.marker([{{lat}}, {{lon}}]).addTo(map);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'}).addTo(map);
+                </script>
+        </div></div>
+        </td>
+        <td></td>
+        <td>
+            <div id = recommendations>
+                <center><b> The government's top 3 home improvement recommendations for energy efficiency are:</b></center>
+
+                <ul>
+                    <li>Improve existing/install insulation in your property (wall, loft, roof, floor, etc.).</li>   
+                    <br>            
+                    <li>Update boiler to a more efficient model, or install a heat pump in your property.</li>
+                    <br>
+                    <li>Install solar panels on your property. </li>
+                    <br>
+                    <li>For more information, please visit gov.uk's <a href = "https://www.gov.uk/improve-energy-efficiency">energy efficency tool</a></li>
+
+            </div>
+        </td>
+        </tr>
+    </table> 
+    <body>
+    </body> 
     <form action="/">
         <div style="overflow:auto;">
             <div style="float:right;">
                 <button type="submit" id="return">Change details</button>
             </div>
           </div>
-        </form>
+        </form>            
+
 </div>
   <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script> 
-</center>
+
 </body>
 <body> 
     <div class = "footer-container">
