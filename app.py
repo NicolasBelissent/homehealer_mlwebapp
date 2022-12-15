@@ -40,14 +40,18 @@ def results():
     if None in inputed_features or '' in inputed_features:
 
         # Return erro prompt if not complete
-        return render_template("test.html", prediction_text= 'Please select a value for all inputs.')
+        return render_template("error.html", error_message= 'Please select a value for all inputs.')
     else:
 
         # Making a get request to get Local Authority from inputed postcode
         response = requests.get('https://findthatpostcode.uk/postcodes/{}.json'.format(str(postcode))).json()
  
-        # Obtain local Authority through directory search
-        local = str(response['data']['attributes']['laua_name'])
+        try:
+
+            # Obtain local Authority through directory search
+            local = str(response['data']['attributes']['laua_name'])
+        except KeyError:
+            return render_template("error.html", error_message= 'Please enter a valid postcode.')
 
          # Obtain logitude and latitude of the postcode
         lon = str(response['data']['attributes']['location']['lon'])
