@@ -50,6 +50,10 @@ def results():
 
             # Obtain local Authority through directory search
             local = str(response['data']['attributes']['laua_name'])
+
+            # Obtain clean postcode
+            clean_postcode = str(response['data']['attributes']['pcds'])
+
         except KeyError:
             return render_template("error.html", error_message= 'Please enter a valid postcode.')
 
@@ -69,7 +73,7 @@ def results():
         output= round(prediction[0], 2)
         
         return render_template("results.html", home_type = request.form['house-type'], 
-        energy_rating = request.form['energy'], postcode = request.form['postcode'],
+        energy_rating = request.form['energy'], postcode = clean_postcode,
         prediction_text= "Your property could potentially save up to {} KW/h of energy per year.".format(output),
         lon = lon, lat = lat)
 
