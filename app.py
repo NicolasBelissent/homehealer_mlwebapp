@@ -13,11 +13,6 @@ model= joblib.load(open("trained_dt_model.pkl", "rb"))
 # defining the different pages of html and specifying the features required to be filled in the html form
 @app.route("/")
 def home():
-    # if request.method == "POST":
-    #     home_type=request.form.get("house-type")
-    #     energy_rating = request.form.get("energy")
-    #     postcode = request.form.get("postcode")
-    #     return "your house is " + home_type + " with energy rating " + energy_rating+ " in " + postcode
     return render_template("start.html")
 
 
