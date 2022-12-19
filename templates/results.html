@@ -53,23 +53,49 @@ button {
 button:hover {
   opacity: 0.8;
 }
- </style> 
+table {
+  font-family:'Ubuntu';
+  border-collapse: collapse;
+  width: 100%;
+}
 
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+ </style> 
+ <head>
+<body> 
+  <div class = "header-container">
+      <div class = "header">
+        <form action="/about">
+          <div style="overflow:auto;">
+              <div style="float:right;">
+                  <button type="submit" id="about" name = "about">About</button>
+              </div>
+              </div>
+          </form>
+          </div>
+      </div>
+  </div>
+</body>
 </head> 
-<div class = content-container>
-    <center>
-    <h1><b>Results</b></h1>
-    </center>
     <div class = content-container>
-        <body id = results name = results >
+        <body id = "results" name = "results" >
                 <center>
-                    Your property is a/an <b> {{ home_type }} </b> with energy rating <b> {{ energy_rating }} </b> in <b>  {{ postcode }}</b> 
+                  <h1><b>Results</b></h1>
+                  <br>
+                    Your property is a/an <u><b> {{ home_type }} </b></u> with energy rating <b><u> {{ energy_rating }} </u></b> in <b><u> {{ postcode }}</u> </b> 
                     <br><br>
-                 <span style = "color:#006fac;"><b>   {{ prediction_text }} </b></span>
+
                 </center>
         </body>
-
-    <br><br>
       <div id="map" name = 'map'>
                 <script>
                 var map = L.map('map').setView([{{lat}}, {{lon}}], 12);
@@ -77,26 +103,98 @@ button:hover {
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'}).addTo(map);
                 </script>
       </div>
-        <br><br>
-            <div id = recommendations>
-                <center><b> The government's top 3 home improvement recommendations for energy efficiency are:</b>
+      <br>
+      <div id=" prediction" name = "prediction">
+      <center>
+      <h2><span style = "color:#006fac;"><b>   {{ prediction_text }} </b></span></center></h2>
+      </div>
 
-                <ul>
-                    <li>Improve existing/install insulation in your property (wall, loft, roof, floor, etc.).</li>   
-                    <br>            
-                    <li>Update boiler to a more efficient model, or install a heat pump in your property.</li>
-                    <br>
-                    <li>Install solar panels on your property. </li>
-                    <br>
-                    <li>For more information, please visit gov.uk's <a href = "https://www.gov.uk/improve-energy-efficiency">energy efficency tool</a></li>
+        <br><br>
+            <div id = "recommendation" name = "recommendation">
+                  <table>
+                    <caption>    <center>
+    Sample measures recommended by the goverment to improve the energy efficiency of your property:
+  </center> <br></caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Recommended measures</th>
+                        <th scope="col">Indicative cost</th>
+                        <th scope="col">Typical savings per year</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Room-in-roof insulation</td>
+                        <td>£1,500-£2,700</td>
+                        <td>£837</td>
+                      </tr>
+                      <tr>
+                        <td>Internal or external wall insulation</td>
+                        <td>£4,000-£14,000</td>
+                        <td>£195</td>
+                      </tr>
+                      <tr>
+                        <td>Solid floor insulation</td>
+                        <td>£4,000-£6,000</td>
+                        <td>£122</td>
+
+                      </tr>
+                      <tr>
+                        <td>Increase hot water cylinder insulation</td>
+                        <td>£15-£30</td>
+                        <td>£142</td>
+
+                      </tr>
+                      <br>
+                      <tr>
+                        <td>Draught proofing</td>
+                        <td>£80-£120</td>
+                        <td>£18</td>
+
+                      </tr>
+                      <tr>
+                        <td>Low energy lighting</td>
+                        <td>£20</td>
+                        <td>£21</td>
+
+                      </tr>
+                      <tr>
+                        <td>High heat retention storage heaters / dual immersion cylinder</td>
+                        <td>£1,200-£1,800</td>
+                        <td>£319</td>
+
+                      </tr>
+                      <tr>
+                        <td>Solar water heating</td>
+                        <td>£4,000-£6,000</td>
+                        <td>£57</td>
+
+                      </tr>
+                      <tr>
+                        <td>Replace single glazed windows with low-E double glazed windows</td>
+                        <td>£3,300-£6,500</td>
+                        <td>£123</td>
+
+                      </tr>
+                      <tr>
+                        <td>Solar photovoltaic panels</td>
+                        <td>£5,000-£8,000</td>
+                        <td>£287</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                    <br><br>
+                    For more information, please visit gov.uk's <a href = "https://www.gov.uk/improve-energy-efficiency">energy efficency tool </a> or read <a href = "https://www.gov.uk/guidance/domestic-private-rented-property-minimum-energy-efficiency-standard-landlord-guidance#selecting-energy-efficiency-measures"> guidance for private landlords </a>
             </div>
           </center>
     <body>
     </body> 
+    <br><br>
     <form action="/">
         <div style="overflow:auto;">
             <div style="float:right;">
-                <button type="submit" id="return">Change details</button>
+                <button type="submit" id="return" name = "return" >Change details</button>
             </div>
           </div>
         </form>            
