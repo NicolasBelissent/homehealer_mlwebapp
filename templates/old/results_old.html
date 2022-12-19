@@ -33,9 +33,9 @@ body {
   font-size: x-small;
 }
 #map{
-    display: block;
+    display:inline-block;
     height:400px;
-    width: 500px;
+    width: 400px;
 }
 
 button {
@@ -60,7 +60,16 @@ background-color: #ffffff;
   border-collapse: separate;
   border-spacing: 100px;
 }
- </style> 
+
+table tr td:empty {
+  width: 100px;
+}
+  
+table tr td {
+  padding-bottom: 10px;
+}
+ 
+    </style> 
 </head> 
 <div class = content-container>
     <center>
@@ -78,16 +87,21 @@ background-color: #ffffff;
     
     <br><br>
     </body>
-            <div id="map" style="float:left;" >
+    <table id = "table">
+        <tr>
+        <td>
+            <div id="map">
                 <script>
                 var map = L.map('map').setView([{{lat}}, {{lon}}], 12);
                 L.marker([{{lat}}, {{lon}}]).addTo(map);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors'}).addTo(map);
                 </script>
-        </div>
-        <br>
+        </div></div>
+        </td>
+        <td></td>
+        <td>
             <div id = recommendations>
-                <center><b> The government's top 3 home improvement recommendations for energy efficiency are:</b>
+                <center><b> The government's top 3 home improvement recommendations for energy efficiency are:</b></center>
 
                 <ul>
                     <li>Improve existing/install insulation in your property (wall, loft, roof, floor, etc.).</li>   
@@ -97,8 +111,11 @@ background-color: #ffffff;
                     <li>Install solar panels on your property. </li>
                     <br>
                     <li>For more information, please visit gov.uk's <a href = "https://www.gov.uk/improve-energy-efficiency">energy efficency tool</a></li>
+
             </div>
-          </center>
+        </td>
+        </tr>
+    </table> 
     <body>
     </body> 
     <form action="/">
