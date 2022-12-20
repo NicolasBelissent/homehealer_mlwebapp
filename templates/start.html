@@ -268,30 +268,30 @@ function fixStepIndicator(n) {
   x[n].className += " active";
 }
 
-let form=document.getElementById("formSubmission");
+//let form=document.getElementById("formSubmission");
 
-let table=document.getElementById('data');
-form.addEventListener("submit",(e)=>{
-  e.preventDefault();
-  submit();
-})
-
-
-const submit=()=>{
-  let house_type = document.getElementById("house-type").value;
-    let energy = document.getElementById("energy").value;
-    let postcode = document.getElementById("postcode").value;
+//let table=document.getElementById('data');
+//form.addEventListener("submit",(e)=>{
+ // e.preventDefault();
+ // submit();
+//})
 
 
-  let newArray = [house_type,energy,postcode];
-  newArray.forEach((item)=>{
-      var li = document.createElement("li");
-  var text = document.createTextNode(item);
-  li.appendChild(text);
-  table.appendChild(li);
-  })
-  form.reset(); 
-}
+//const submit=()=>{
+ // let house_type = document.getElementById("house-type").value;
+ //   let energy = document.getElementById("energy").value;
+ //   let postcode = document.getElementById("postcode").value;
+
+
+//  let newArray = [house_type,energy,postcode];
+ // newArray.forEach((item)=>{
+ //     var li = document.createElement("li");
+//  var text = document.createTextNode(item);
+ // li.appendChild(text);
+ // table.appendChild(li);
+//  })
+//  form.reset(); 
+//}
 </script>
 
 </body>
