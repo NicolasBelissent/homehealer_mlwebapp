@@ -9,7 +9,7 @@ HomeHealer is a machine learning web application that estimates potential energy
 4. Start the Flask application using python app.py
 5. Open your web browser and navigate to http://localhost:5000
 
-###Usage
+### Usage
 
 Enter your postcode, energy rating, and house type into the input form
 Click the "Submit" button to estimate potential energy savings
