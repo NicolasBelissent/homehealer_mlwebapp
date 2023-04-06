@@ -18,6 +18,3 @@ Click the "Submit" button to estimate potential energy savings
 
 See *requirements.txt* file for dependencies.
 
-### Credits
-
-HomeHealer was developed by [Your Name] and [Contributor Name] as a machine learning web application project.
