@@ -16,14 +16,7 @@ Click the "Submit" button to estimate potential energy savings
 
 ### Dependencies
 
-Flask==2.0.1
-Flask-WTF==0.15.1
-numpy==1.21.3
-pandas==1.3.4
-pymongo==4.0.1
-requests==2.26.0
-scikit-learn==1.0.1
-wtforms==3.0.1
+See *requirements.txt* file for dependencies.
 
 ### Credits
 
